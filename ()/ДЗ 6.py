@@ -1,37 +1,44 @@
-def bubble_sort(arr):
-    N = 5000
-    ResultOk = False
-    First = 0
-    Last = N-1
+def selection_sort(arr):
     n = len(arr)
     for i in range(n):
-        for j in range(0, n-i-1):
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
     return arr
 
-def binary_search(arr, target):
-    low = 0
-    high = len(arr) - 1
-    while low <= high:
-        mid = (low + high) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            low = mid + 1
+
+def binary_search(element, arr):
+    arr = sorted(arr)
+    first = 0
+    last = len(arr) - 1
+    result_ok = False
+
+    while first <= last and not result_ok:
+        mid = (first + last) // 2
+        if arr[mid] == element:
+            result_ok = True
+        elif arr[mid] < element:
+            first = mid + 1
         else:
-            high = mid - 1
-    return -1
+            last = mid - 1
 
-unsorted_list = [66, 39, 25, 16, 48, 11, 95]
-print("Cписок:", unsorted_list)
+    if result_ok:
+        print(f"Элемент {element} найден в списке.")
+    else:
+        print(f"Элемент {element} не найден в списке.")
 
-sorted_list = bubble_sort(unsorted_list)
-print("Отсортированный список:", sorted_list)
 
-target = 25
-index = binary_search(sorted_list, target)
-if index != -1:
-    print(f"Элемент {target} найден на позиции {index}.")
-else:
-    print(f"Элемент {target} не найден.")
+
+unsorted_list = [64, 25, 12, 22, 11, 47]
+sorted_list = selection_sort(unsorted_list)
+print("Отсортированный список (метод выбором сортировки):", sorted_list)
+
+unsorted_list = [64, 25, 12, 22, 11, 47]
+sorted_list = selection_sort(unsorted_list)
+print("Отсортированный список (метод сортировки выбором):", sorted_list)
+
+element_to_find = 22
+my_list = [11, 12, 22, 25, 47, 64]
+binary_search(element_to_find, my_list)
